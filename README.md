@@ -20,13 +20,18 @@ npm run build
 
 
 
-### For å "serve" den pakkede distribusjonen lokalt
+## For å "serve" den pakkede distribusjonen lokalt
 
-## Installere serve 
+### Installere serve 
 ```
 npm install -g serve
 ```
-## Serve mappen "dist"  man bygger med "npm run build" lokalt
+### Serve mappen "dist"  man bygger med "npm run build" lokalt
 ```
 serve -s dist
+```
+
+## Dockerize og kjør alt i docker
+```
+docker build . -t origotest --build-arg=APIKEY=__SETT__INN__APIKEY__ ; docker run -it --rm -p 5000:5000 origotest:latest
 ```
