@@ -1,5 +1,8 @@
 # oslobysykkel-vue-simple
 
+## Api Key konfigurasjon
+Oslobysykkel ApiKey må settes inn i konfigurasjonsfilen "babel.config.js" under: API__KEY__REPLACE
+
 ## For å installere dependencies første gang. 
 ```
 npm install
