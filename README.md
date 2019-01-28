@@ -1,29 +1,29 @@
-# vue-simple
+# oslobysykkel-vue-simple
 
-## Project setup
+## For å installere dependencies første gang. 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Kompiler og server koden med hot-reloads for utvikling
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### For å kompilere og pakke for distribusjon
 ```
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### For å "serve" den pakkede distribusjonen lokalt
+
+## Installere serve 
+```
+npm install -g serve
+```
+## Serve mappen "dist"  man bygger med "npm run build" lokalt
+```
+serve -s dist
+```
