@@ -1,7 +1,7 @@
 # oslobysykkel-vue-simple
 
 ## Api Key konfigurasjon
-Oslobysykkel ApiKey må settes inn i konfigurasjonsfilen "babel.config.js" under: API__KEY__REPLACE
+Din Oslobysykkel api nøkkel må settes inn i konfigurasjonsfilen "babel.config.js" under: API__KEY__REPLACE
 
 Du kan opprette konto å få api nøkkel her: https://developer.oslobysykkel.no/sign-up
 
@@ -24,7 +24,7 @@ npm run build
 
 ## For å "serve" den pakkede distribusjonen lokalt
 
-### Installere serve 
+### Installer pakken 'serve' 
 ```
 npm install -g serve
 ```
@@ -33,7 +33,7 @@ npm install -g serve
 serve -s dist
 ```
 
-## Dockerize og kjør alt i docker
+## Alternativt, kjør alt i Docker.
 ```
 docker build . -t origotest --build-arg=APIKEY=__SETT__INN__APIKEY__ ; docker run -it --rm -p 5000:5000 origotest:latest
 ```
