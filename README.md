@@ -3,6 +3,8 @@
 ## Api Key konfigurasjon
 Oslobysykkel ApiKey må settes inn i konfigurasjonsfilen "babel.config.js" under: API__KEY__REPLACE
 
+Du kan opprette konto å få api nøkkel her: https://developer.oslobysykkel.no/sign-up
+
 ## For å installere dependencies første gang. 
 ```
 npm install
