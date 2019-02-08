@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import BysykkelListe from './components/BysykkelListe.vue'
+  import BysykkelListe from './components/ProxiedBysykkelListe.vue'
 
   export default {
     name: 'app',
