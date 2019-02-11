@@ -1,7 +1,8 @@
 const pluginsArr = [];
 pluginsArr.push(['inline-replace-variables', {
-  __API_KEY__: '',
-  __PROXY_HOST_PORT_API_KEY__: 'http://localhost:8081'
+  __API_KEY__: 'TEST',
+  __MAPBOX_ACCESS_TOKEN__: '',
+  __PROXY_HOST_PORT__: 'http://localhost:8081'
 }]);
 
 if (process.env.NODE_ENV === 'production') {

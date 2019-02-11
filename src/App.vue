@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="mapCont">
-      <mapbox access-token=""
+      <mapbox :access-token="accessToken"
               :map-options="{
                 style: 'mapbox://styles/mapbox/dark-v9',
                 center: [10.7264695, 59.9190443],
@@ -29,9 +29,11 @@
   import axios from "axios";
   import VueAxios from "vue-axios";
 
+
   Vue.use(VueAxios, axios);
 
-  const PROXY_HOST_PORT = __PROXY_HOST_PORT_API_KEY__;
+  const PROXY_HOST_PORT = __PROXY_HOST_PORT__;
+  const MAPBOX_ACCESS_TOKEN = __MAPBOX_ACCESS_TOKEN__;
 
   export default {
     name: 'app',
@@ -40,6 +42,7 @@
     }
     , data: function data() {
       return {
+        accessToken: MAPBOX_ACCESS_TOKEN,
         refreshInterval: -1,
         status: '',
         timer: '',
@@ -133,7 +136,6 @@
                   [10, 20]
                 ]
               }
-
             }
           });
 
@@ -147,7 +149,6 @@
               "circle-radius": 6,
               "circle-stroke-width": 1,
               "circle-stroke-color": "#989898",
-
               'circle-color': {
                 property: 'bikes',
                 type: 'interval',

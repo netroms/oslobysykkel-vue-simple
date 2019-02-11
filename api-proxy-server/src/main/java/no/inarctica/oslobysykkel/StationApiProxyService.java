@@ -123,13 +123,6 @@ public class StationApiProxyService implements Service {
     ));
   }
 
-  /*
-  "center": {
-                "latitude": 59.91562,
-                "longitude": 10.762248
-            }
-   */
-
   Map<Integer, Map<String, String>> parseStationsStream(Stream<JsonValue> s) {
     return s.collect(Collectors.toMap(
         o -> o.asJsonObject().getInt("id"),
@@ -157,7 +150,6 @@ public class StationApiProxyService implements Service {
     stationCache.put(STATION_CACHE_KEY, new CachedMapEntry(fetchedMap));
     return fetchedMap;
   }
-
 
   private Stream<JsonValue> fetchStationStream() throws Exception {
     return getStationsAsJsonValueStream(getJsonFromUrl(RemoteApiUrls.HTTPS_OSLOBYSYKKEL_NO_API_V_1_STATIONS));

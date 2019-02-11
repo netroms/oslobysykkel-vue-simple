@@ -52,14 +52,12 @@ public final class Main {
     WebServer server = WebServer.create(serverConfig, createRouting(config));
 
     // Start the server and print some info.
-    server.start().thenAccept(ws -> {
-      System.out.println(
-          "WEB server is up! http://localhost:" + ws.port() + "/api");
-    });
+    server.start().thenAccept(ws ->
+        System.out.println("WEB server is up! http://localhost:" + ws.port() + "/api"));
 
     // Server threads are not daemon. NO need to block. Just react.
-    server.whenShutdown().thenRun(()
-        -> System.out.println("WEB server is DOWN. Good bye!"));
+    server.whenShutdown().thenRun(() ->
+        System.out.println("WEB server is DOWN. Good bye!"));
 
     return server;
   }
@@ -72,7 +70,7 @@ public final class Main {
    */
   private static Routing createRouting(Config config) {
     HealthSupport health = HealthSupport.builder()
-        .add(HealthChecks.healthChecks())   // Adds a convenient set of checks
+        .add(HealthChecks.healthChecks())
         .add(new RemoteApiHealthCheck(config.get("app.api_key").asString().orElse("")))
         .build();
 
