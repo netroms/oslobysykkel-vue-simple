@@ -8,6 +8,13 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 public class HttpUtils {
 
+  /**
+   * Simple http client for doing GET requests using Java 11 HttpClient
+   * @param uri fullUri to call GET
+   * @param apiKey oslobysykkel api key to use in Client-Identifier header
+   * @return raw response
+   * @throws Exception
+   */
   public static String httpGET(String uri, String apiKey) throws Exception {
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()

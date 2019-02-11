@@ -19,7 +19,6 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
 import javax.json.JsonValue;
 
 
@@ -73,7 +72,7 @@ public class StationApiProxyService implements Service {
       JsonObject json = getJsonFromUrl(RemoteApiUrls.HTTPS_OSLOBYSYKKEL_NO_API_V_1_STATUS);
       response.send(json);
     } catch (Exception e) {
-      logger.severe("Failed to fetch oslobysykkel.no/api/v1/status; Exception=" + e.getMessage());
+      logger.severe("Failed to fetch '" + RemoteApiUrls.HTTPS_OSLOBYSYKKEL_NO_API_V_1_STATUS + "'; Exception=" + e.getMessage());
       response.send("error");
     }
   }
@@ -86,7 +85,7 @@ public class StationApiProxyService implements Service {
   private void getStationsAndAvailability(ServerRequest request, ServerResponse response) {
     addCORSHeaders(response);
     try {
-      JsonObjectBuilder responseJson = buildResponse(getAvailabilityMap(), getStationMap());
+      JsonObjectBuilder responseJson = buildJsonResponse(getAvailabilityMap(), getStationMap());
       response.send(responseJson.build());
 
     } catch (Exception e) {
@@ -95,17 +94,20 @@ public class StationApiProxyService implements Service {
     }
   }
 
-  private static JsonObjectBuilder buildResponse(Map<Integer, JsonObject> availMap, Map<Integer, Map<String, String>> stationMap) {
+  private static JsonObjectBuilder buildJsonResponse(
+      Map<Integer, JsonObject> availabilityMap,
+      Map<Integer, Map<String, String>> stationMap) {
+
+    // Merges availabilityMap with stationMap, iterates stations map,
+    // and looks up availability in the availability by common id
     final JsonArrayBuilder stationJsonArray = Json.createArrayBuilder();
     stationMap.forEach((key, value) -> {
-      String aStr = availMap.get(key).toString();
-      JsonObjectBuilder sB = Json.createObjectBuilder();
-      sB.add("id", key);
-      sB.add("title", value.get("title"));
-      JsonReader reader = Json.createReader(new StringReader(aStr));
-      JsonObject avail = reader.readObject();
-      sB.add("availability", avail);
-      stationJsonArray.add(sB);
+      JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+      objectBuilder.add("id", key);
+      objectBuilder.add("title", value.get("title"));
+      objectBuilder.add("location", value.get("location"));
+      objectBuilder.add("availability", availabilityMap.get(key));
+      stationJsonArray.add(objectBuilder);
     });
 
     JsonObjectBuilder responseJson = Json.createObjectBuilder();
@@ -121,10 +123,21 @@ public class StationApiProxyService implements Service {
     ));
   }
 
+  /*
+  "center": {
+                "latitude": 59.91562,
+                "longitude": 10.762248
+            }
+   */
+
   Map<Integer, Map<String, String>> parseStationsStream(Stream<JsonValue> s) {
     return s.collect(Collectors.toMap(
         o -> o.asJsonObject().getInt("id"),
-        o -> Map.of("title", o.asJsonObject().getString("title"))
+        o -> Map.of(
+            "title", o.asJsonObject().getString("title"),
+            "location", o.asJsonObject().getJsonObject("center").getJsonNumber("latitude").toString()
+                + ", " + o.asJsonObject().getJsonObject("center").getJsonNumber("longitude").toString()
+        )
     ));
   }
 

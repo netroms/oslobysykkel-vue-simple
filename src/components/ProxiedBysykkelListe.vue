@@ -15,6 +15,10 @@
         {{ s.title }} : {{ s.availability.bikes }} av {{ s.availability.locks }}
       </div>
     </section>
+
+
+
+
   </div>
 </template>
 
@@ -23,6 +27,7 @@
   import Vue from 'vue';
   import axios from "axios";
   import VueAxios from "vue-axios";
+
 
   Vue.use(VueAxios, axios);
 
@@ -41,8 +46,15 @@
 
   export default {
     name: 'ProxiedBysykkelListe',
+    components: {
+      // MglMap
+    },
     data: function data() {
       return {
+        accessToken: "pk.eyJ1IjoibmV0cm9tcyIsImEiOiJjanJ6OHlhcHkwenQ4NGFvY3k3YTRjcG5vIn0.nQq5GJHHn8cZ1xcbFT4Z6A", // your access token. Needed if you using Mapbox maps
+        mapStyle: 'mapbox://styles/mapbox/basic-v9', // your map style
+
+
         refreshInterval: -1,
         status: '',
         timer: '',
